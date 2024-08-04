@@ -38,3 +38,17 @@
 .read-the-docs {
   color: #888;
 }
+
+.black-button {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.black-button:hover {
+  background-color: #e99696;
+}
