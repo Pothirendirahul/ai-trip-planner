@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { Input } from "../components/ui/input"; // Adjusted path to the Input component
 import { AI_PROMPT, SelectBudgetOptions, SelectTravelersList } from "@/constants/options";
@@ -12,12 +13,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
+
 function CreateTrip() {
   const [place, setPlace] = useState(null);
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState({});
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleInputChange = (name, value) => {
@@ -28,38 +29,50 @@ function CreateTrip() {
     console.log(formData);
   }, [formData]);
 
-
-  const login=useGoogleLogin({
-    onSuccess:(codeResp)=>console.log(codeResp),
-    onError:(error)=>console.log(error)
-  })
+  const login = useGoogleLogin({
+    onSuccess: (codeResp) => GetUserProfile(codeResp),
+    onError: (error) => console.log(error)
+  });
 
   const OnGenerateTrip = async () => {
-
     const user = localStorage.getItem('user');
 
     if (!user) {
-      setOpenDialog(true)
+      setOpenDialog(true);
       return;
     }
 
-    if (formData?.noOfDays > 5 && !formData?.location || !formData?.budget || !formData.traveler) {
-      toast("Please Fill All Details")
+    if (formData?.noOfDays > 5 || !formData?.location || !formData?.budget || !formData.traveler) {
+      toast("Please Fill All Details");
       return;
     }
+
     const FINAL_PROMPT = AI_PROMPT
-      .replace('{location}', formData?.location)
+      .replace('{location}', formData?.location?.label)
       .replace('{totalDays}', formData?.noOfDays)
       .replace('{traveler}', formData?.traveler)
-      .replace('{budget}', formData?.budget)
-      .replace('{totalDays}', formData?.noOfDays)
+      .replace('{budget}', formData?.budget);
 
-    console.log(FINAL_PROMPT)
+    console.log(FINAL_PROMPT);
 
     const result = await chatSession.sendMessage(FINAL_PROMPT);
 
     console.log(result?.response?.text());
+  };
 
+  const GetUserProfile = (tokenInfo) => {
+    axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
+      headers: {
+        Authorization: `Bearer ${tokenInfo?.access_token}`,
+        Accept: 'Application/json',
+      }
+    })
+      .then((resp) => {
+        console.log(resp);
+        localStorage.setItem('user', JSON.stringify(resp?.data));
+        setOpenDialog(false);
+        OnGenerateTrip()
+      });
   };
 
   return (
@@ -127,38 +140,29 @@ function CreateTrip() {
           </div>
         </div>
         <div className="my-10 justify-end flex">
-          <button onClick={OnGenerateTrip} className="custom-button">
+          <button onClick={OnGenerateTrip} className="custom-button bg-black text-white hover:bg-gold">
             Generate Trip
           </button>
         </div>
 
-        <Dialog open={openDialog}>
-
+        <Dialog open={openDialog} onOpenChange={setOpenDialog}>
           <DialogContent>
             <DialogHeader>
               <DialogDescription>
-                <img src="/public/logo.svg"></img>
+                <img src="/logo.svg" alt="Logo" />
                 <h2 className="font-bold text-lg mt-7">Sign In Google</h2>
-                <p>Sign in to the App with Google Authentication Securely  </p>
-
-                <button 
-                onClick={login}
-                className="w-full mt-5 flex items-center justify-center bg-black text-white hover:bg-gold">
+                <p>Sign in to the App with Google Authentication Securely</p>
+                <button
+                  onClick={login}
+                  className="w-full mt-5 flex items-center justify-center bg-black text-white hover:bg-gold"
+                >
                   <FcGoogle className="h-7 w-7 mr-2" />
                   Sign In With Google
                 </button>
-
-
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>
-
-
-
-
-
-
       </div>
     </div>
   );
