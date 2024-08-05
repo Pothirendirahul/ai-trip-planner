@@ -15,7 +15,7 @@ export const SelectTravelersList = [
     },
     {
       id: 3,
-      title: 'Family',✈️
+      title: 'Family',
       desc: 'A family adventure',
       icon: '👩‍❤️‍👨',
       people: '4 People'
@@ -26,13 +26,6 @@ export const SelectTravelersList = [
       desc: 'A group of friends',
       icon: '👫',
       people: '3-5 People'
-    },
-    {
-      id: 5,
-      title: 'Team Outing',
-      desc: 'A corporate team outing',
-      icon: '👫',
-      people: '5-10 People'
     }
 ]
 
@@ -51,15 +44,9 @@ export const SelectBudgetOptions = [
       icon: '💵',
       range: '$$'
     },
+    
     {
       id: 3,
-      title: 'Premium',
-      desc: 'High-quality travel with excellent amenities',
-      icon: '💎',
-      range: '$$$'
-    },
-    {
-      id: 4,
       title: 'Luxury',
       desc: 'Luxury travel with top-notch amenities and services',
       icon: '🛎️',
@@ -67,4 +54,4 @@ export const SelectBudgetOptions = [
     },
 ];
   
-export const AI_PROMPT='Generate Travel Plan for Location : {Location}'
+export const AI_PROMPT = 'Generate Travel Plan for Location: {location}, for {totalDays} Days for {traveler} with a {budget}, give me Hotel options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, Time t travel each of the location for {totalDays} with each day plan with best time to visit in JSON format.';

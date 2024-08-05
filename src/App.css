@@ -52,3 +52,25 @@
 .black-button:hover {
   background-color: #e99696;
 }
+
+
+.custom-button {
+  background-color: black;
+  color: white;
+  padding: 4px 8px; /* adjust padding as needed */
+  border-radius: 3px;
+  transition: background-color 0.3s;
+}
+
+.custom-button:hover {
+  background-color: rgb(129, 113, 22); /* hover state color */
+}
+
+.custom-button {
+  background-color: black;
+  color: white;
+}
+
+.custom-button:hover {
+  background-color: rgb(111, 100, 36);
+}
