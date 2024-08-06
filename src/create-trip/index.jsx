@@ -6,6 +6,7 @@ import { AI_PROMPT, SelectBudgetOptions, SelectTravelersList } from "@/constants
 import { toast } from "sonner";
 import { chatSession } from "@/service/AiModel";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 import {
   Dialog,
   DialogContent,
@@ -18,12 +19,14 @@ import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/service/firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 function CreateTrip() {
   const [place, setPlace] = useState(null);
   const [formData, setFormData] = useState({});
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate=useNavigate();
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -74,9 +77,9 @@ function CreateTrip() {
 
   const SaveAiTrip = async (TripData) => {
     setLoading(true);
+    const docId = Date.now().toString(); // Move docId declaration here
     try {
       const user = JSON.parse(localStorage.getItem('user'));
-      const docId = Date.now().toString();
       await setDoc(doc(db, "AITrips", docId), {
         userSelection: formData,
         tripData: JSON.parse(TripData),
@@ -89,7 +92,10 @@ function CreateTrip() {
     } finally {
       setLoading(false);
     }
+    setLoading(false);
+    navigate('/view-trip/'+docId);
   };
+  
 
   const GetUserProfile = async (tokenInfo) => {
     try {
