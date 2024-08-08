@@ -6,7 +6,7 @@ import { db } from '@/service/firebaseConfig'; // Ensure the correct path to you
 import InfoSection from '../components/InfoSection';
 import Hotels from '../components/Hotels';
 import PlacesToVisit from '../components/PlacesToVisit';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 
 function Viewtrip() {
   const { tripId } = useParams();
