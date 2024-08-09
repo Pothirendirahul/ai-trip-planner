@@ -26,7 +26,8 @@ function CreateTrip() {
   const [formData, setFormData] = useState({});
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate=useNavigate();
+  const [darkMode, setDarkMode] = useState(false); // State for dark mode
+  const navigate = useNavigate();
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -95,7 +96,6 @@ function CreateTrip() {
     setLoading(false);
     navigate('/view-trip/'+docId);
   };
-  
 
   const GetUserProfile = async (tokenInfo) => {
     try {
@@ -116,7 +116,14 @@ function CreateTrip() {
   };
 
   return (
-    <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10">
+    <div className={`sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10 ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className={`fixed bottom-4 right-4 p-2 rounded-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black'}`}
+      >
+        {darkMode ? '🌞' : '🌜'}
+      </button>
+
       <h2 className="font-bold text-3xl">Tell us your travel preferences 🏕️🌴</h2>
       <p className="mt-3 text-gray-500 text-xl">
         Give us a glimpse of your preferences, and our trip planner will craft an exclusive itinerary that reflects your unique style.
@@ -151,7 +158,7 @@ function CreateTrip() {
               <div
                 key={index}
                 onClick={() => handleInputChange('budget', item.title)}
-                className={`p-4 border cursor-pointer rounded-lg hover:shadow ${formData?.budget === item.title && 'shadow-lg border-red-700'}`}
+                className={`p-4 border cursor-pointer rounded-lg hover:shadow ${formData?.budget === item.title ? 'shadow-lg border-red-700' : ''}`}
               >
                 <h2 className="text-4xl">{item.icon}</h2>
                 <h2 className="font-bold text-lg">{item.title}</h2>
@@ -168,7 +175,7 @@ function CreateTrip() {
               <div
                 key={index}
                 onClick={() => handleInputChange('traveler', item.people)}
-                className={`p-4 border cursor-pointer rounded-lg hover:shadow ${formData?.traveler === item.people && 'shadow-lg border-red-700'}`}
+                className={`p-4 border cursor-pointer rounded-lg hover:shadow ${formData?.traveler === item.people ? 'shadow-lg border-red-700' : ''}`}
               >
                 <h2 className="text-4xl">{item.icon}</h2>
                 <h2 className="font-bold text-lg">{item.title}</h2>
@@ -180,12 +187,13 @@ function CreateTrip() {
         <div className="my-10 justify-end flex">
           <button
             disabled={loading}
-            onClick={OnGenerateTrip} className="custom-button bg-black text-white hover:bg-gold">
+            onClick={OnGenerateTrip}
+            className="custom-button bg-black text-white hover:bg-gold"
+          >
             {loading ?
               <AiOutlineLoading3Quarters className="h-7 w-7 animate-spin" /> : 'Generate Trip'}
           </button>
         </div>
-
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
           <DialogContent>
             <DialogHeader>
@@ -195,7 +203,8 @@ function CreateTrip() {
                 <p>Sign in to the App with Google Authentication Securely</p>
                 <button
                   onClick={login}
-                  className="w-full mt-5 flex items-center justify-center bg-black text-white hover:bg-gold">
+                  className="w-full mt-5 flex items-center justify-center bg-black text-white hover:bg-gold"
+                >
                   <FcGoogle className="h-7 w-7 mr-2" />
                   Sign In With Google
                 </button>
