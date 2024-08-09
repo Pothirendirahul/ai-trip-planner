@@ -45,7 +45,7 @@ function InfoSection({ trip }) {
                         </h2>
 
                         <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500 text-xs md:text-md'>
-                            🥂 Number of Travellers: {trip.userSelection?.traveler}
+                            🥂Travellers: {trip.userSelection?.traveler}
                         </h2>
                     </div>
                 </div>

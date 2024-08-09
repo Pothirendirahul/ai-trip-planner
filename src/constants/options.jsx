@@ -10,7 +10,7 @@ export const SelectTravelersList = [
       id: 2,
       title: 'A Couple',
       desc: 'Two travelers in tandem',
-      icon: '👩‍❤️‍👨👯',
+      icon: '👯',
       people: '2 People'
     },
     {
