@@ -12,5 +12,6 @@ Install my-project with npm
   npm Install
   cd to PathFindr
   npm run dev 
+  Force install if any error occurs
 Vercel
 Usage of Vercel.json for Routing
