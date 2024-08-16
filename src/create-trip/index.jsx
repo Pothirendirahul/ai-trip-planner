@@ -162,7 +162,7 @@ function CreateTrip() {
               >
                 <h2 className="text-4xl">{item.icon}</h2>
                 <h2 className="font-bold text-lg">{item.title}</h2>
-                <h2 className="text-sm text-gray-600">{item.desc}</h2>
+                <h2 className="text-sm text-red-600">{item.desc}</h2>
               </div>
             ))}
           </div>
@@ -179,7 +179,7 @@ function CreateTrip() {
               >
                 <h2 className="text-4xl">{item.icon}</h2>
                 <h2 className="font-bold text-lg">{item.title}</h2>
-                <h2 className="text-sm text-gray-600">{item.desc}</h2>
+                <h2 className="text-sm text-red-600">{item.desc}</h2>
               </div>
             ))}
           </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Make sure to import Link from react-router-dom
+import { Link } from 'react-router-dom'; // Ensure Link is imported
 import axios from 'axios';
 
 function Hero() {
@@ -12,11 +12,11 @@ function Hero() {
     setAnswer("loading...");
     try {
       const response = await axios({
-        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyD1RHlOdgZA_6PDkFcWE06SK1NqR68f8to",
+        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent",
         method: "post",
         data: { "contents": [{ "parts": [{ "text": question }] }] }
       });
-      setAnswer(response["data"]["candidates"][0]["content"]["parts"][0]["text"]);
+      setAnswer(response.data.candidates[0].content.parts[0].text);
     } catch (error) {
       setAnswer("Error occurred. Please try again.");
     }
@@ -50,7 +50,7 @@ function Hero() {
         {/* Chatbot Section */}
         {isOpen && (
           <div
-            className={`fixed ${isMinimized ? 'bottom-4 right-4 w-16 h-16' : 'bottom-4 right-4 w-80 h-60'} bg-white rounded-lg shadow-lg transition-all duration-300 overflow-auto`}
+            className={`fixed ${isMinimized ? 'bottom-4 right-4 w-16 h-16' : 'bottom-4 right-4 w-full max-w-xs h-72'} bg-white rounded-lg shadow-lg transition-all duration-300 overflow-auto`}
             style={{ zIndex: 1000 }}
           >
             <div className="flex items-center justify-between p-2 border-b">
@@ -64,7 +64,7 @@ function Hero() {
               </div>
             </div>
             {!isMinimized && (
-              <div className="p-4">
+              <div className="p-2 sm:p-4">
                 <textarea
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
@@ -79,7 +79,7 @@ function Hero() {
                 >
                   Generate Trip ➣
                 </button>
-                <div className="prose">
+                <div className="prose text-sm">
                   <p>{answer}</p>
                 </div>
               </div>
