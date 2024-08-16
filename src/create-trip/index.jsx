@@ -94,7 +94,7 @@ function CreateTrip() {
       setLoading(false);
     }
     setLoading(false);
-    navigate('/view-trip/'+docId);
+    navigate('/view-trip/' + docId);
   };
 
   const GetUserProfile = async (tokenInfo) => {
@@ -144,10 +144,12 @@ function CreateTrip() {
         </div>
         <div>
           <h2 className="text-xl my-3 font-medium">How many days are you planning your trip?</h2>
-          <Input
+          <input
             placeholder="Ex. 3"
             type="number"
             onChange={(e) => handleInputChange('noOfDays', e.target.value)}
+            style={{ color: 'black' }} // Inline style for text color
+            className="border border-gray-300 rounded-md p-2"
           />
         </div>
 
