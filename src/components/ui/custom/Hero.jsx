@@ -12,7 +12,7 @@ function Hero() {
     setAnswer("loading...");
     try {
       const response = await axios({
-        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent",
+        url:"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyD1RHlOdgZA_6PDkFcWE06SK1NqR68f8to",
         method: "post",
         data: { "contents": [{ "parts": [{ "text": question }] }] }
       });
